@@ -159,7 +159,31 @@ def pyp_date_checker(plate_day,date_day):
         while check_time(input_time) == 0:
             print "Our system does not recognize your input-time!! Try enter time in the format hh:mm"
             input_time = [raw_input("Enter time: ")]
+        time_checked = input_time
+        #print time_checked[0]
+        pyp_time_checker(check_time(time_checked), date_day)
 
+def pyp_time_checker(time_checked, date_day):
+    hour = time_checked[0]
+    print hour
+    minute = time_checked[1]
+    print minute
+    if hour > 6 and hour < 10 or hour > 15 and hour < 20:
+        if hour == 9 or hour == 19:
+            if minute < 31:
+                print "Unfortunately you can't be on the road on " + date_day, "at ", hour , ":" , minute, ". PICO Y PLACA ACTIVE!!"
+                repeat_program()
+            else:
+                print "Pico y Placa has ended for now! You can be on the road!!! But be aware it could be active again in a few hours"
+                repeat_program()
+        print "Unfortunately you can't be on the road on " + date_day, "at ", hour , ":" , minute, ". PICO Y PLACA ACTIVE!!"
+    else:
+        print "Congratulations right now at ", hour, ":", minute,". Pico y Placa is NOT active. ENJOY THE ROAD!!"
+    #if hour > 6 and hour < 10 or hour > 15 and hour < 20:
+    #    print "Unfortunately you can't be on the road on " + date_day, "at " , hour , ":" , minute, ". PICO Y PLACA ACTIVE!!"
+    #else:
+    #    print "Congratulations right now at ", hour, ":", minute,". Pico y Placa is NOT active. ENJOY THE ROAD!!"
+    #print "Pico y Placa has ended for now! You can be on the road!!! But be aware it could be active again in a few hours"
 def repeat_program():
     again = raw_input("Do you want to check again?? Press Y for yes or any key for no: ")
     if again == "Y" or again == "y":
