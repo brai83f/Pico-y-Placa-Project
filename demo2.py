@@ -1,6 +1,6 @@
 from re import compile
 import datetime
-a = True
+
 # Function with the pattern which the input raw-plate must match to be a valid plate.
 # Input must be:
 #    three letters -> [a-zA-Z]{3} followed by three numbers -> [0-9]{3}
@@ -114,7 +114,7 @@ def input_date():
     return y,m,d
 
 def check_time(raw_time):
-    time_format = compile('[[0-9]{2}:[0-9]{2}')
+    time_format = compile('^[0-9]{2}:[0-9]{2}$')
     print raw_time
     for time in raw_time:
         if time_format.match(time) is not None:
@@ -138,19 +138,27 @@ def get_hour_n_minute(correct_time):
         print "Incorrect time"
         a = False
 
-def day_n_number(day_name):
+def plate_n_date(digit):
     weekdays = {
         1: "Monday",
         2: "Monday",
         3: "Tuesday",
-        4: "Wednesday",
+        4: "Tuesday",
+        5: "Wednesday",
         6: "Wednesday",
         7: "Thursday",
         8: "Thursday",
         9: "Friday",
         0: "Friday",
         }
-    return weekdays.get(day_name, "There's not Pico y Placa running this day!!!")
+    return weekdays.get(digit)
+
+def repeat_program():
+    again = raw_input("Do you want to check again?? Press Y for yes or any key for no: ")
+    if again == "Y" or again == "y":
+        main()
+    else:
+        print "Good-Bye!!!"
 
 def main():
 
@@ -162,14 +170,17 @@ def main():
     print "Enter the date you want to check in this order -> yyyy, mm, dd"
     date = input_date()
     print date
-    get_dayname(date[0],date[1],date[2])
+    week_day = get_dayname(date[0],date[1],date[2])
 
-    print "Enter the time you want to check in 24Hour format hh:mm"
-    input_time = [raw_input("Enter time: ")]
+    pyp_day = plate_n_date(car_plate)
+    if pyp_day != week_day:
+        print "Congratulations!!! You can drive at any time this date!"
+    else:
+        print "Enter the time you want to check in a 24-hour format hh:mm"
+        input_time = [raw_input("Enter time: ")]
+        check_time(input_time)
 
-    check_time(input_time)
-
-
+    repeat_program()
 
 if __name__ == "__main__":
     main()
