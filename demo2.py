@@ -121,9 +121,7 @@ def check_time(raw_time):
             return get_hour_n_minute(raw_time)
 
         else:
-            print "Incorrect time"
-            a = False
-            break
+            return 0
 
 def get_hour_n_minute(correct_time):
     time = str(correct_time)
@@ -135,8 +133,7 @@ def get_hour_n_minute(correct_time):
         print checked_time
         return checked_time
     else:
-        print "Incorrect time"
-        a = False
+        return 0
 
 def plate_n_date(digit):
     weekdays = {
@@ -152,6 +149,16 @@ def plate_n_date(digit):
         0: "Friday",
         }
     return weekdays.get(digit)
+
+def pyp_date_checker(plate_day,date_day):
+    if plate_day != date_day:
+        print "Congratulations!!! You can drive at any time on " + date_day, "this date"
+    else:
+        print "Enter the time you want to check in a 24-hour format hh:mm"
+        input_time = [raw_input("Enter time: ")]
+        while check_time(input_time) == 0:
+            print "Our system does not recognize your input-time!! Try enter time in the format hh:mm"
+            input_time = [raw_input("Enter time: ")]
 
 def repeat_program():
     again = raw_input("Do you want to check again?? Press Y for yes or any key for no: ")
@@ -170,15 +177,10 @@ def main():
     print "Enter the date you want to check in this order -> yyyy, mm, dd"
     date = input_date()
     print date
-    week_day = get_dayname(date[0],date[1],date[2])
 
+    week_day = get_dayname(date[0],date[1],date[2])
     pyp_day = plate_n_date(car_plate)
-    if pyp_day != week_day:
-        print "Congratulations!!! You can drive at any time this date!"
-    else:
-        print "Enter the time you want to check in a 24-hour format hh:mm"
-        input_time = [raw_input("Enter time: ")]
-        check_time(input_time)
+    pyp_date_checker(pyp_day, week_day)
 
     repeat_program()
 
