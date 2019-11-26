@@ -36,6 +36,10 @@ def year_format_checker(year):
     print year
     for y in year:
         if year_format.match(y) is not None:
+            int_year = int(year[0])
+            if int_year < 1900 or int_year > 3000:
+                print "Out of range year!!! Please try a valid year"
+                return 0
             print "Correct year-format"
             return year
         else:
@@ -51,6 +55,10 @@ def month_format_checker(month):
     print month
     for m in month:
         if month_format_a.match(m) is not None or month_format_b.match(m) is not None:
+            int_month = int(month[0])
+            if int_month < 1 or int_month > 12:
+                print "Out of range month!!! Please try a valid month"
+                return 0
             print "Correct month-format"
             return month
         else:
@@ -66,6 +74,10 @@ def day_format_checker(day):
     print day
     for d in day:
         if day_format_a.match(d) is not None or day_format_b.match(d) is not None:
+            int_day = int(day[0])
+            if int_day < 1 or int_day > 31:
+                print "Out of range day!!! Please try a valid day"
+                return 0
             print "Correct day-format"
             return day
         else:
@@ -77,14 +89,8 @@ def day_format_checker(day):
 #    Returns the name of the day as a string
 def get_dayname(y,m,d):
     year = int(y[0])
-    print year
     month = int(m[0])
-    print month
     day = int(d[0])
-    print day
-    if year < 1900 or year > 3000 or month > 12 or month < 1 or day < 1 or day > 31:
-        print "Out of range date!!! Please try a valid date"
-        input_date()
     x = datetime.datetime(year, month, day)
     dayofweek = x.strftime("%A")
     print dayofweek
@@ -94,15 +100,18 @@ def input_date():
     input_year = [raw_input("Enter year \'yyyy\': ")]
     while year_format_checker(input_year) == 0:
         input_year = [raw_input("Enter year \'yyyy\': ")]
+    y = input_year
 
     input_month = [raw_input("Enter month \'mm\': ")]
     while month_format_checker(input_month) == 0:
         input_month = [raw_input("Enter month \'mm\': ")]
+    m = input_month
 
     input_day = [raw_input("Enter day \'dd\': ")]
     while day_format_checker(input_day) == 0:
         input_day = [raw_input("Enter day \'dd\': ")]
-    return input_year, input_month, input_day
+    d = input_day
+    return y,m,d
 
 def check_time(raw_time):
     time_format = compile('[[0-9]{2}:[0-9]{2}')
@@ -153,10 +162,6 @@ def main():
     print "Enter the date you want to check in this order -> yyyy, mm, dd"
     date = input_date()
     print date
-    print date[0]
-    print date[1]
-    print date[2]
-
     get_dayname(date[0],date[1],date[2])
 
     print "Enter the time you want to check in 24Hour format hh:mm"
