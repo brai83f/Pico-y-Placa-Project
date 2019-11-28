@@ -1,5 +1,6 @@
 from re import compile
 import datetime
+import sys
 
 # Function with the pattern which the input raw-plate must match to be a valid plate.
 # Input must be:
@@ -91,11 +92,16 @@ def get_dayname(y,m,d):
     year = int(y[0])
     month = int(m[0])
     day = int(d[0])
-    x = datetime.datetime(year, month, day)
-    dayofweek = x.strftime("%A")
-    nameofmonth = x.strftime("%B")
-    print "The", day, "of", nameofmonth,"of", year, "is a", dayofweek
-    return dayofweek
+    try:
+        x = datetime.datetime(year, month, day)
+        dayofweek = x.strftime("%A")
+        nameofmonth = x.strftime("%B")
+        print "The", day, "of", nameofmonth,"of", year, "is a", dayofweek
+        return dayofweek
+    except ValueError:
+        print "The date entered is not a valid date!!! Try again!!!\n"
+        return 0
+
 
 # Function to get the input date and check the validity of it
 # Input is the user raw input
@@ -202,6 +208,7 @@ def repeat_program():
         main()
     else:
         print "Good-Bye!!!"
+        sys.exit(0)
 
 # Main function
 def main():
@@ -213,7 +220,10 @@ def main():
     print "Enter the date you want to check in this order -> yyyy, mm, dd"
     date = input_date()
 
+    while get_dayname(date[0],date[1],date[2]) == 0:
+        date = input_date()
     week_day = get_dayname(date[0],date[1],date[2])
+
     pyp_day = plate_n_date(car_plate)
     pyp_date_checker(pyp_day, week_day)
 
